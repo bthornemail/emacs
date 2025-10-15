@@ -148,7 +148,7 @@
               (intern (string-trim (substring line 10)))))
        ((string-match "lambda:" line)
         (setf (wave-workflow-eval-lambda workflow)
-              (string-trim (substring line 7)))))))))
+              (string-trim (substring line 7))))))))
 
 (defun wave-workflow-parse-print-section (workflow lines)
   "Parse print section from YAML"
@@ -194,7 +194,7 @@
       (cond
        ((string-match "condition:" line)
         (setf (wave-workflow-loop-continue-condition workflow)
-              (string-trim (substring line 10)))))))))
+              (string-trim (substring line 10))))))))
 
 (defun wave-workflow-parse-async-section (workflow lines)
   "Parse async section from YAML"
@@ -249,7 +249,7 @@
               (string-trim (substring line 6))))
        ((string-match "recovery:" line)
         (setf (wave-workflow-error-recovery workflow)
-              (string-trim (substring line 9)))))))))
+              (string-trim (substring line 9))))))))
 
 (defun wave-workflow-parse-spo-section (workflow lines)
   "Parse SPO modality section from YAML"
