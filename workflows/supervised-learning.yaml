@@ -1,0 +1,36 @@
+workflow:
+  id: "supervised-learning-workflow"
+  type: "repl"
+  y_combinator_level: "public"
+  
+  read:
+    source: "user-input"
+    input_type: "s-expression"
+    protocol: "emacsclient"
+    
+  eval:
+    transform: "supervised-process-input"
+    async:
+      enabled: true
+      executor: "timer"
+      timeout: 10.0
+      
+  print:
+    output: "buffer"
+    target: "*Supervised-REPL*"
+    format: "pretty-print"
+    
+  loop:
+    condition: "(lambda (ctx) (not (plist-get ctx :quit)))"
+    
+  error:
+    try: "eval-transform"
+    catch: "(lambda (err) (message \"Error: %s\" err))"
+    await: "user-intervention"
+    recovery: "ask-user"
+    
+  spo_modality:
+    subject: "user"
+    predicate: "supervises"
+    object: "autonomous-agent"
+    modality: "supervised"

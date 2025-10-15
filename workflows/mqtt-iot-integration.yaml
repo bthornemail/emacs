@@ -1,0 +1,36 @@
+workflow:
+  id: "mqtt-iot-integration-workflow"
+  type: "repl"
+  y_combinator_level: "shared"
+  
+  read:
+    source: "mqtt-broker"
+    input_type: "iot-message"
+    protocol: "mqtt"
+    
+  eval:
+    transform: "iot-data-processing"
+    async:
+      enabled: true
+      executor: "hybrid"
+      timeout: 5.0
+      
+  print:
+    output: "mqtt-response"
+    target: "iot-devices"
+    format: "json"
+    
+  loop:
+    condition: "(lambda (ctx) (mqtt-connected-p ctx))"
+    
+  error:
+    try: "iot-processing"
+    catch: "(lambda (err) (mqtt-error-handler err))"
+    await: "device-timeout"
+    recovery: "reconnect-mqtt"
+    
+  spo_modality:
+    subject: "iot-gateway"
+    predicate: "processes-data-from"
+    object: "iot-devices"
+    modality: "autonomous"

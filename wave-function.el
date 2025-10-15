@@ -24,6 +24,16 @@
 (require 'wave-autonomous)
 (require 'wave-emacs-integration)
 
+;; Load autonomous operation system
+(require 'wave-y-combinator)
+(require 'wave-async-framework)
+(require 'wave-workflow-engine)
+(require 'wave-incidence-workflow)
+(require 'wave-protocol-adapter)
+(require 'wave-autonomous-repl)
+(require 'wave-autonomous-init)
+(require 'test-autonomous-operation)
+
 ;; Load examples
 (require 'simple-wave-example nil t)
 (require '5-cell-expansion-example nil t)
@@ -80,13 +90,20 @@
       (insert "   M-x run-autonomous-swarm-demo\n\n")
       (insert "3. Church Encoding Demo:\n")
       (insert "   M-x church-encoding-demo\n\n")
-      (insert "4. Keybindings:\n")
+      (insert "4. Autonomous Operation:\n")
+      (insert "   M-x wave-autonomous-quick-start\n")
+      (insert "   M-x wave-autonomous-system-init\n")
+      (insert "   M-x test-autonomous-operation-all\n\n")
+      (insert "5. Keybindings:\n")
       (insert "   C-c C-i - Inspect current wave function\n")
       (insert "   C-c C-u - Update wave function display\n")
       (insert "   C-c C-s - Simulate wave interference\n")
       (insert "   C-c C-m c - Switch to core wave mode\n")
-      (insert "   C-c C-m m - Switch to meta wave mode\n\n")
-      (insert "5. System Status:\n")
+      (insert "   C-c C-m m - Switch to meta wave mode\n")
+      (insert "   C-c w s - Quick start autonomous operation\n")
+      (insert "   C-c w t - System status & diagnostics\n")
+      (insert "   C-c t a - Run all autonomous tests\n\n")
+      (insert "6. System Status:\n")
       (insert "   M-x wave-function-system-status\n\n")
       (insert "For more information, see the README.md file.\n"))
     (switch-to-buffer buffer)))
@@ -113,6 +130,17 @@
       (insert (format "  wave-communication: %s\n" (if (featurep 'wave-communication) "✓" "✗")))
       (insert (format "  wave-autonomous: %s\n" (if (featurep 'wave-autonomous) "✓" "✗")))
       (insert (format "  wave-emacs-integration: %s\n" (if (featurep 'wave-emacs-integration) "✓" "✗")))
+      
+      ;; Check autonomous operation components
+      (insert "\nAutonomous Operation Components:\n")
+      (insert (format "  wave-y-combinator: %s\n" (if (featurep 'wave-y-combinator) "✓" "✗")))
+      (insert (format "  wave-async-framework: %s\n" (if (featurep 'wave-async-framework) "✓" "✗")))
+      (insert (format "  wave-workflow-engine: %s\n" (if (featurep 'wave-workflow-engine) "✓" "✗")))
+      (insert (format "  wave-incidence-workflow: %s\n" (if (featurep 'wave-incidence-workflow) "✓" "✗")))
+      (insert (format "  wave-protocol-adapter: %s\n" (if (featurep 'wave-protocol-adapter) "✓" "✗")))
+      (insert (format "  wave-autonomous-repl: %s\n" (if (featurep 'wave-autonomous-repl) "✓" "✗")))
+      (insert (format "  wave-autonomous-init: %s\n" (if (featurep 'wave-autonomous-init) "✓" "✗")))
+      (insert (format "  test-autonomous-operation: %s\n" (if (featurep 'test-autonomous-operation) "✓" "✗")))
       
       ;; Check example files
       (insert "\nExample Files:\n")

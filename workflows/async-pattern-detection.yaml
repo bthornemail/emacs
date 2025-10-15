@@ -1,0 +1,36 @@
+workflow:
+  id: "async-pattern-detection-workflow"
+  type: "async-try-catch"
+  y_combinator_level: "private"
+  
+  read:
+    source: "stream-input"
+    input_type: "data-stream"
+    protocol: "mqtt"
+    
+  eval:
+    transform: "async-pattern-detection"
+    async:
+      enabled: true
+      executor: "process"
+      timeout: 30.0
+      
+  print:
+    output: "real-time"
+    target: "*Pattern-Detection*"
+    format: "stream"
+    
+  loop:
+    condition: "(lambda (ctx) (stream-active-p ctx))"
+    
+  error:
+    try: "pattern-detection"
+    catch: "(lambda (err) (log-pattern-error err))"
+    await: "auto-recovery"
+    recovery: "restart-detection"
+    
+  spo_modality:
+    subject: "pattern-detector"
+    predicate: "detects-patterns-in"
+    object: "data-stream"
+    modality: "autonomous"

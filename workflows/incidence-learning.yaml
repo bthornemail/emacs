@@ -1,0 +1,53 @@
+incidence_workflow:
+  id: "autonomous-learning-workflow"
+  
+  vertices:
+    - id: "v0-read-input"
+      operation: "read-user-input"
+      type: "input"
+      
+    - id: "v1-analyze"
+      operation: "autonomous-analyze-pattern"
+      type: "eval"
+      
+    - id: "v2-learn"
+      operation: "autonomous-learn-from-pattern"
+      type: "eval"
+      
+    - id: "v3-display"
+      operation: "print-to-buffer"
+      type: "output"
+      
+  edges:
+    - id: "e0"
+      from: "v0-read-input"
+      to: "v1-analyze"
+      condition: "input-valid"
+      async: true
+      
+    - id: "e1"
+      from: "v1-analyze"
+      to: "v2-learn"
+      condition: "pattern-detected"
+      y_combinator: "private"
+      
+    - id: "e2"
+      from: "v2-learn"
+      to: "v3-display"
+      condition: "learning-complete"
+      
+    - id: "e3"
+      from: "v3-display"
+      to: "v0-read-input"
+      condition: "loop-continue"
+      
+  incidence_matrix:
+    rows: ["v0", "v1", "v2", "v3"]
+    cols: ["e0", "e1", "e2", "e3"]
+    data: [[1,0,0,1], [0,1,0,0], [0,0,1,0], [0,0,0,0]]
+    
+  spo_modality:
+    subject: "autonomous-agent"
+    predicate: "learns-from"
+    object: "user-input"
+    modality: "supervised"
